@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>February 14</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at center, #111 0%, #000 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Georgia, serif;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heart {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  background: linear-gradient(145deg, #ff1a1a, #b30000);
+  transform: rotate(-45deg);
+  animation: beat 1s infinite;
+  box-shadow: 0 0 60px red;
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  background: linear-gradient(145deg, #ff1a1a, #b30000);
+  border-radius: 50%;
+}
+
+.heart:before { top: -85px; left: 0; }
+.heart:after { left: 85px; top: 0; }
+
+@keyframes beat {
+  0%,100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.18); }
+}
+
+#countdown {
+  margin-top: 30px;
+  font-size: 26px;
+  color: gold;
+  font-weight: bold;
+}
+
+#message {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #bbb;
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* Sparkles */
+.sparkle {
+  position: fixed;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="heart"></div>
+<div id="countdown"></div>
+<div id="message">(You are my favorite coder.)</div>
+
+<script>
+var valentineDate = new Date("February 14, 2026 00:00:00").getTime();
+var sparkleStarted = false;
+
+setInterval(function() {
+  var now = new Date().getTime();
+  var distance = valentineDate - now;
+
+  if (distance > 0) {
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+      hours + " hours " + minutes + " minutes " + seconds + " seconds";
+  } else {
+    document.getElementById("countdown").innerHTML =
+      "Happy Valentine's Day, Kavish ❤️";
+
+    document.getElementById("message").style.opacity = "1";
+
+    if (!sparkleStarted) {
+      startSparkles();
+      sparkleStarted = true;
+    }
+  }
+}, 1000);
+
+function startSparkles() {
+  setInterval(function() {
+    var sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = Math.random() * window.innerWidth + "px";
+    sparkle.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(sparkle);
+
+    setTimeout(function() {
+      sparkle.remove();
+    }, 5000);
+
+  }, 120);
+}
+</script>
+<p style="
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
+">
+  Built with ❤️ (and very questionable debugging skills)
+</p>
+</body>
+</html>
